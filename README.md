@@ -1,4 +1,4 @@
-# Rooms-Door
+# Rooms & Door
 Horror games, including backrooms.
 
 ## 介绍
