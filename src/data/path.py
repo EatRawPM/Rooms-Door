@@ -10,12 +10,18 @@ assets_path = join(base_path, 'assets')
 
 fonts_path = join(assets_path, 'fonts')
 
-lang_path = join(assets_path, 'lang')
-
 #data
 
 main_path = join(base_path, '.rooms&doors')
 
+packages_path = join(main_path, 'package.json')
+
 options_path = join(main_path,'options.json')
 
-assets__path = join(main_path, 'assets')
+main_assets_path = join(main_path, 'assets')
+
+assets_packages_path = join(main_assets_path, 'package.json')
+
+lang_path = join(main_assets_path, 'lang')
+
+lang_packages_path = join(lang_path, 'package.json')

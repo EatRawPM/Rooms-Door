@@ -8,4 +8,4 @@ value = {
 }
 
 def create_options(fp) -> None:
-    dump(value, fp, indent=4)
+    dump(value, fp, indent=4, ensure_ascii=False)
