@@ -7,14 +7,10 @@ Horror games, including backrooms.
 
 ### 使用的Python库
 * PyGame
-* PyGetWindow
 
 ### 安装指令
 ```
-pip install pygame
-```
-```
-pip install pygetwindow
+pip install -r requirements.txt
 ```
 
 #### 快速安装
@@ -29,34 +25,16 @@ pip install pygetwindow
 
 ### 使用pyinstaller打包。
 
-* 先要安装requests
-
-```
-pip install requests
-```
-
-* 获得requirements.txt
-
-```
-pip freeze > requirements.txt
-```
-
-* 安装pyinstaller
-
-```
-pip install pyinstaller
-```
-
 ### 打包
 
 #### 测试打包
 
 ```
-pyinstaller -F run.py -n Machineory -i .\assets\images\icons\icon.ico
+pyinstaller -F run.py -n RoomsAndDoors -i .\assets\images\icons\icon.ico
 ```
 
 #### 正式打包
 
 ```
-pyinstaller -F run.py -n Machineory -w -i .\assets\images\icons\icon.ico
+pyinstaller -F run.py -n RoomsAndDoors -w -i .\assets\images\icons\icon.ico
 ```
