@@ -1,7 +1,7 @@
 import time
 
 class CountTimer:
-    def __init__(self, duration):
+    def __init__(self, duration) -> None:
         """
         初始化计时器。
 
@@ -10,13 +10,13 @@ class CountTimer:
         self.duration = duration
         self.start_time = None
 
-    def start(self):
+    def start(self) -> None:
         """
         开始计时。
         """
         self.start_time = time.time()
 
-    def is_done(self):
+    def is_done(self) -> bool:
         """
         检查是否计时完成。
 
@@ -28,7 +28,7 @@ class CountTimer:
         return (current_time - self.start_time) >= self.duration
     
 class CountdownTimer:
-    def __init__(self, duration):
+    def __init__(self, duration) -> None:
         """
         初始化倒计时器。
 
@@ -37,13 +37,13 @@ class CountdownTimer:
         self.duration = duration
         self.start_time = None
 
-    def start(self):
+    def start(self) -> None:
         """
         开始倒计时。
         """
         self.start_time = time.time()
 
-    def is_done(self):
+    def is_done(self) -> bool:
         """
         检查是否倒计时完成。
 
@@ -54,7 +54,7 @@ class CountdownTimer:
         current_time = time.time()
         return (current_time - self.start_time) >= self.duration
 
-    def remaining_time(self, is_int: bool=False):
+    def remaining_time(self, is_int: bool=False) -> int | float:
         """
         返回剩余时间（秒）。
 

@@ -3,7 +3,7 @@ from src.data.path import lang_path
 from os.path import join,exists
 from src.assets.assets.lang.create import create_lang
 
-def set_langs():
+def set_langs() -> None:
     for key, value in langs.items():
         path = join(lang_path, f"{key}.json")
         if exists(path):

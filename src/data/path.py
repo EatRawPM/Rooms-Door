@@ -25,3 +25,7 @@ assets_packages_path = join(main_assets_path, 'package.json')
 lang_path = join(main_assets_path, 'lang')
 
 lang_packages_path = join(lang_path, 'package.json')
+
+texture_path = join(main_assets_path, 'texture')
+
+model_path = join(main_assets_path, 'model')

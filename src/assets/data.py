@@ -2,7 +2,7 @@ from os.path import exists
 from os import mkdir
 from src.assets.options.options import init_options
 from src.lang import init_lang
-from src.data.path import main_path, options_path, main_assets_path, packages_path, lang_path, assets_packages_path, lang_packages_path
+from src.data.path import main_path, options_path, main_assets_path, packages_path, lang_path, assets_packages_path, lang_packages_path, texture_path, model_path
 from src.assets.options.create import create_options
 from src.assets.package.create import create_package
 from src.assets.assets.package.create import create_assets_package
@@ -53,16 +53,32 @@ def init_data():
                     print(f'{lang_path} is created.')
                     assets_lang_package()
                     langs()
+            def texture():
+                if exists(texture_path):
+                    print(f'{texture_path} already exists.')
+                else:
+                    mkdir(texture_path)
+                    print(f'{texture_path} is created.')
+            def model():
+                if exists(model_path):
+                    print(f'{model_path} already exists.')
+                else:
+                    mkdir(model_path)
+                    print(f'{model_path} is created.')
 
             if exists(main_assets_path):
                 print(f'{main_assets_path} already exists.')
                 assets_package()
                 lang()
+                texture()
+                model()
             else:
                 mkdir(main_assets_path)
                 print(f'{main_assets_path} is created.')
                 assets_package()
                 lang()
+                texture()
+                model()
 
         if exists(main_path):
             print(f'{main_path} already exists.')

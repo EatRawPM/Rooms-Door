@@ -1,0 +1,3 @@
+StringSyntax = [
+    '@v'
+]

@@ -1,3 +1,3 @@
 package = {
-    "langs": ['en_us.json', 'zh_cn.json']
+    "langs": ['en_us', 'zh_cn']
 }
