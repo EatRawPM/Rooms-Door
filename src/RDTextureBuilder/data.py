@@ -1,6 +1,7 @@
 datas = {
     'id': {
         'key': False,
-        'value': 'str: !file'
+        'value': 'str',
+        'mode': 'global'
     }
 }

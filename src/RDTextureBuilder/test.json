@@ -1,36 +1,37 @@
 {
-  "id": "default_texture",
-  "name": "Default",
-  "type": "texture",
-  "body": {
-      "family": {
-          "default": {
-              "background": false,
-              "background-color": null,
-              "size": "64x64",
-              "pos": "0,0",
-              "blit": true,
-              "box": {
-                  "white": {
-                      "count": 2,
-                      "size": "32x32",
-                      "pos": ["0,0", "32, 32"],
-                      "background":true,
-                      "background-color": "white",
-                      "blit": true
-                  },
-                  "purple": {
-                      "count": 2,
-                      "size": "32x32",
-                      "pos": ["32,0", "0, 32"],
-                      "background":true,
-                      "background-color": "purple",
-                      "blit": true
-                  }
-              }
-          }
-      },
-      "family-box": {}
-  },
-  "script": {}
+    "id": "default_texture",
+    "name": "Default",
+    "type": "texture",
+    "size": "64x64",
+    "body": {
+        "family": {
+            "default": {
+                "background": false,
+                "background-color": null,
+                "size": "64x64",
+                "pos": "0,0",
+                "blit": true,
+                "box": {
+                    "white": {
+                        "count": 2,
+                        "size": "32x32",
+                        "pos": ["0,0", "32, 32"],
+                        "background":true,
+                        "background-color": "white",
+                        "blit": true
+                    },
+                    "purple": {
+                        "count": 2,
+                        "size": "32x32",
+                        "pos": ["32,0", "0, 32"],
+                        "background":true,
+                        "background-color": "purple",
+                        "blit": true
+                    }
+                }
+            }
+        },
+        "family-box": {}
+    },
+    "script": {}
 }

@@ -1,5 +1,6 @@
 from json import load
 from src.RDTextureBuilder.build import Build
+from src.RDTextureBuilder.get import Get
 
 class Read:
     def __init__(self, path):
@@ -14,6 +15,8 @@ class Read:
 
     def read(self):
         self.file = self.load()
+
+        Get(self.file, 'global')
 
         return self.file
 
