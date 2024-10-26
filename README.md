@@ -7,6 +7,7 @@ Horror games, including backrooms.
 
 ### 使用的Python库
 * PyGame
+* pillow
 
 ### 安装指令
 ```
