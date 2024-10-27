@@ -137,14 +137,22 @@ class TextureBuilder:
                 case 'rect':
                     x = 0
                     y = 0
-                    size = '32x32'
+                    d_size = '32x32'
                     width = 32
                     height = 32
 
                     x = data.get('x', x)
                     y = data.get('y', y)
 
-                    Rect(self.__draw, x, y, width, height, (0,0,0)).build()
+                    size = data.get('size', d_size)
+
+                    if not size is None:
+                        width, height = map(int, size.split('x'))
+
+                    width = data.get('width', width)
+                    height = data.get('height', height)
+
+                    Rect(name, self.__draw, x, y, width, height, (0,0,0)).build()
                 case other:
                         raise TypeError(f'{other}不存在!')
 
@@ -166,6 +174,8 @@ class TextureBuilder:
 
         self.__load_body()
 
+        print(f'TextureBuilder: {self.__name}.{self.__id}正在构建...')
+
         save_path = os.path.join(self.__output_folder, f'{self.__name}.{self.__id}')
 
         if __mode == 'save':
@@ -173,4 +183,4 @@ class TextureBuilder:
         elif __mode == 'show':
             self.__image.show()
 
-        print(f'{self.__name}.{self.__id}已生成.')
+        print(f'TextureBuilder: {self.__name}.{self.__id}已生成!')

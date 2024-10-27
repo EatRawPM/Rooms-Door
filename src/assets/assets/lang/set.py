@@ -7,8 +7,8 @@ def set_langs() -> None:
     for key, value in langs.items():
         path = join(lang_path, f"{key}.json")
         if exists(path):
-            print(f'{path} already exists.')
+            print(f'Data: {path} already exists.')
         else:
-            print(f'{path} is created.')
+            print(f'Data: {path} is created.')
             with open(path, 'w', encoding='utf-8') as f:
                 create_lang(f, value)
