@@ -1,0 +1,19 @@
+from PIL import Image, ImageDraw
+
+class Rect:
+    def __init__(self, draw: ImageDraw.ImageDraw, x: int, y: int, width: int, height: int, fill_color: tuple, out_line_size: int = 0,outline_color: tuple = (0,0,0)):
+        self.__draw = draw
+        self.__x = x
+        self.__y = y
+        self.__width = width
+        self.__height = height
+
+        self.__end_x = self.__x + self.__width
+        self.__end_y = self.__y + self.__height
+
+        self.__fill_color = fill_color
+        self.__out_line_size = out_line_size
+        self.__outline_color = outline_color
+
+    def build(self):
+        self.__draw.rectangle([self.__x, self.__y, self.__end_x, self.__end_y], self.__fill_color)

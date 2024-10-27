@@ -7,10 +7,10 @@ from src.scene.run_scene import RunScene
 from src.scene.menu_scene import MenuScene
 from src.scene.game_scene import GameScene
 from src.scene.core.scene_manager import SceneManager
-# from src.TextureBuilder import TextureBuilder
+from src.TextureBuilder import TextureBuilder
 import pygame
 
-# TextureBuilder('./src/TextureBuilder/test.json', './src/TextureBuilder/out').build()
+TextureBuilder('./src/TextureBuilder/test.json', './src/TextureBuilder/out').build()
 
 init_data()
 
