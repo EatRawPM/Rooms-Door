@@ -1,7 +1,8 @@
 import json
 import os
 from PIL import Image, ImageDraw
-from src.TextureBuilder.body import Rect
+from src.TextureBuilder.body.rect import Rect
+from src.Port import Builder
 
 def jsonfile_tips_h():
     print('TIPS_H')
@@ -15,9 +16,12 @@ def jsonfile_tips():
         if key == 'in_body':
             for ley, lue in value.items():
                 print(f'body: ({ley}: {lue})')
-                if key == 'rect':
-                    for ey, ue in value.items():
+                if ley == 'rect':
+                    for ey, ue in lue.items():
                         print(f'body/rect: ({ey}: {ue})')
+                if ley == 'triangle':
+                    for ey, ue in lue.items():
+                        print(f'body/triangle: ({ey}: {ue})')
         else:
             print(f'global: ({key}: {value})')
 
@@ -47,7 +51,24 @@ class TextureBuilder:
             "value": "字典, 特殊, 决定body子绘画内容",
             "type": "字符串, 非必要, 默认: rect, TIPS: 每个type参数不一样",
             "rect": {
-                "self": "body子类, "
+                "self": "body子类",
+                "x": "整数, 建议, 决定Body的x位置, 默认: 0",
+                "y": "整数, 建议, 决定Body的y位置, 默认: 0",
+                "size": "字符串, 建议, 决定Body的大小, 格式: '高度x宽度', 默认: '64x64'",
+                "width": "整数, 可选, 决定Body的长度, 层级: '低于size', 默认: 64",
+                "height": "整数, 可选, 决定Body的宽度, 层级: '低于size', 默认: 64",
+                "fill": "布尔, 可选, 决定是否填充, 默认: true",
+                "alpha": "整数, 可选, 决定绘制填充的透明度, 范围: 0~255, 默认: 255",
+                "color": "列表[整数], 可选, 当fill为true时, 更换填充颜色, 默认: [0,0,0]",
+                "outline": "布尔, 可选, 决定是否绘制边框, 默认: false",
+                "ol": "布尔, 可选, 决定是否绘制边框, 层级: '低于outline', 默认: false",
+                "outline-size": "整数, 可选, 层级: '低于outline', 默认: 0",
+                "ols": "整数, 可选, 层级: 'outline-size', 默认: 1",
+                "outline-alpha": "整数, 可选, 决定绘制边框的透明度, 范围: 0~255, 默认: 255",
+                "ola": "整数, 可选, 决定绘制边框的透明度, 范围: 0~255, 默认: 255"
+            },
+            "triangle": {
+                "self": "body子类",
             }
         }
     }
@@ -77,7 +98,7 @@ class TextureBuilder:
         self.__height = 64
 
         self.__bg = TextureBuilder.DEFAULT_BG
-        self.__bg_color = TextureBuilder.DEFAULT_BG_COLOR
+        self.__bg_color = (0,0,0)
         self.__alpha = TextureBuilder.DEFAULT_ALPHA
 
     def __load_json(self):
@@ -106,13 +127,13 @@ class TextureBuilder:
         self.__alpha = self.__data.get('alpha', self.__alpha)
 
         if self.__bg:
-            bg_color = self.__data.get('background-color', self.__data.get('bg-color', self.__bg_color))
+            bg_color = self.__data.get('background-color', self.__data.get('bg-color', TextureBuilder.DEFAULT_BG_COLOR))
             try:
                 bg_color[3] = self.__alpha
             except IndexError:
                 bg_color.append(self.__alpha)
         else:
-            bg_color = (0,0,0,0)
+            bg_color = [0,0,0,0]
 
         self.__bg_color = tuple(bg_color)
 
@@ -140,6 +161,13 @@ class TextureBuilder:
                     d_size = '32x32'
                     width = 32
                     height = 32
+                    fill = True
+                    alpha = 255
+                    color = (0,0,0)
+                    outline = False
+                    outline_size = 1
+                    outline_color = (255,255,255),
+                    outline_alpha = 255
 
                     x = data.get('x', x)
                     y = data.get('y', y)
@@ -152,7 +180,41 @@ class TextureBuilder:
                     width = data.get('width', width)
                     height = data.get('height', height)
 
-                    Rect(name, self.__draw, x, y, width, height, (0,0,0)).build()
+                    fill = data.get('build', fill)
+
+                    alpha = data.get('alpha', alpha)
+
+                    if fill:
+                        list_color = data.get('color', [0,0,0])
+                        try:
+                            list_color[3] = alpha
+                        except IndexError:
+                            list_color.append(alpha)
+                    else:
+                        list_color = [0,0,0,0]
+
+                    color = tuple(list_color)
+
+                    outline = data.get('outline', data.get('ol', outline))
+
+                    outline_size = data.get('outline_size', data.get('ols', outline_size))
+
+                    outline_alpha = data.get('outline_alpha', data.get('ola', outline_alpha))
+
+                    if outline:
+                        list_outline_color = data.get('outline-color', data.get('olc', [0,0,0]))
+                        try:
+                            list_outline_color[3] = outline_alpha
+                        except IndexError:
+                            list_outline_color.append(outline_alpha)
+                    else:
+                        list_outline_color = color
+
+                    outline_color = tuple(list_outline_color)
+
+                    Rect(name, self.__draw, x, y, width, height, color, outline_size, outline_color).build()
+                case 'triangle':
+                    ...
                 case other:
                         raise TypeError(f'{other}不存在!')
 
@@ -174,7 +236,7 @@ class TextureBuilder:
 
         self.__load_body()
 
-        print(f'TextureBuilder: {self.__name}.{self.__id}正在构建...')
+        print(f'{Builder}: {self.__name}.{self.__id}正在构建...')
 
         save_path = os.path.join(self.__output_folder, f'{self.__name}.{self.__id}')
 
@@ -183,4 +245,4 @@ class TextureBuilder:
         elif __mode == 'show':
             self.__image.show()
 
-        print(f'TextureBuilder: {self.__name}.{self.__id}已生成!')
+        print(f'{Builder}: {self.__name}.{self.__id}已生成!')
