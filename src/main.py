@@ -8,9 +8,10 @@ from src.scene.menu_scene import MenuScene
 from src.scene.game_scene import GameScene
 from src.scene.core.scene_manager import SceneManager
 from src.TextureBuilder import TextureBuilder
+from src.assets.assets.texture.default.default import default_texture
 import pygame
 
-TextureBuilder('./src/TextureBuilder/test.json', './src/TextureBuilder/out').build()
+TextureBuilder('dict', default_texture, './out').build()
 
 init_data()
 

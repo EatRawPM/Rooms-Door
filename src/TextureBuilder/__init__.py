@@ -3,6 +3,7 @@ import os
 from PIL import Image, ImageDraw
 from src.TextureBuilder.body.rect import Rect
 from src.Port import Builder
+from typing import Any
 
 def jsonfile_tips_h():
     print('TIPS_H')
@@ -82,8 +83,11 @@ class TextureBuilder:
     DEFAULT_BG_COLOR = [0,0,0]
     DEFAULT_ALPHA = 255
 
-    def __init__(self, input_file, output_folder):
-        self.__input_file = input_file
+    MODE = ['json', 'dict']
+
+    def __init__(self, mode:str = 'json', input_value: str | dict[str, Any] = '', output_folder: str = '') -> None:
+        self.__mode = mode
+        self.__input_value = input_value
         self.__output_folder = output_folder
         self.__data: dict = {}
         self.__image = None
@@ -101,12 +105,21 @@ class TextureBuilder:
         self.__bg_color = (0,0,0)
         self.__alpha = TextureBuilder.DEFAULT_ALPHA
 
-    def __load_json(self):
-        try:
-            with open(self.__input_file, 'r', encoding='utf-8') as f:
-                self.__data: dict = json.load(f)
-        except FileNotFoundError as e:
-            raise FileNotFoundError(f'error: {e}')
+    def __load_json(self) -> None:
+        match self.__mode:
+            case 'json':
+                try:
+                    with open(self.__input_value, 'r', encoding='utf-8') as f:
+                        self.__data: dict = json.load(f)
+                except FileNotFoundError as e:
+                    raise FileNotFoundError(f'error: {e}')
+            case 'dict':
+                if isinstance(self.__input_value, dict):
+                    self.__data = self.__input_value
+                else:
+                    raise TypeError(f'{self.__mode}下, 输入必须为dict!')
+            case other:
+                raise TypeError(f'{other}mode不存在!')
 
         if self.__data.get('type', '').lower() != 'texture':
             raise TypeError(f'JSON的Type是必须的, 且必须为\'texture\'')
@@ -137,7 +150,7 @@ class TextureBuilder:
 
         self.__bg_color = tuple(bg_color)
 
-    def __load_body(self):
+    def __load_body(self) -> None:
         self.__body = self.__data.get('body', {})
 
         typey = 'rect'
@@ -218,7 +231,7 @@ class TextureBuilder:
                 case other:
                         raise TypeError(f'{other}不存在!')
 
-    def build(self, mode: str=''):
+    def build(self, mode: str='', create_folder: bool = True) -> None:
         if not mode is None:
             __mode = TextureBuilder.DEFAULT_MODE
         elif mode == 'save':
@@ -238,7 +251,11 @@ class TextureBuilder:
 
         print(f'{Builder}: {self.__name}.{self.__id}正在构建...')
 
-        save_path = os.path.join(self.__output_folder, f'{self.__name}.{self.__id}')
+        save_folder = os.path.join(self.__output_folder)
+        save_path = os.path.join(save_folder, f'{self.__name}.{self.__id}')
+
+        if create_folder:
+            os.makedirs(save_folder, exist_ok=True)
 
         if __mode == 'save':
             self.__image.save(save_path)
