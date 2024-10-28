@@ -241,6 +241,8 @@ class TextureBuilder:
         else:
             raise ValueError(f'{mode}不存在, 请选择正确的模式, 或留空!')
 
+        print(f'{Builder}: {self.__name}.{self.__id}正在构建...')
+
         self.__load_json()
 
         self.__image = Image.new('RGBA', (self.__width, self.__height), self.__bg_color)
@@ -248,8 +250,6 @@ class TextureBuilder:
         self.__draw = ImageDraw.Draw(self.__image)
 
         self.__load_body()
-
-        print(f'{Builder}: {self.__name}.{self.__id}正在构建...')
 
         save_folder = os.path.join(self.__output_folder)
         save_path = os.path.join(save_folder, f'{self.__name}.{self.__id}')
