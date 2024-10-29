@@ -1,3 +1,0 @@
-StringSyntax = [
-    '@v'
-]
