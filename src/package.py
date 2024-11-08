@@ -1,3 +1,9 @@
 from src.console import ServerTitle, ClientTitle
 
-Title = 'Rooms&Doors' if not ServerTitle else (ServerTitle if not ClientTitle else ClientTitle)
+if ClientTitle == '':
+    if ServerTitle == '':
+        Title = 'Rooms&Doors'
+    else:
+        Title = ServerTitle
+else:
+    Title = ClientTitle

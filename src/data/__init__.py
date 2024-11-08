@@ -1,13 +1,19 @@
 from os.path import exists
 from os import mkdir
+
+from src.assets.assets.icon import icon_path
+from src.assets.assets.images.path import images_path
+from src.data.assets.images.icon.create import create_icon
 from src.data.options import init_options
 from src.lang import init_lang
-from src.assets import main_path, options_path, main_assets_path, packages_path, lang_path, assets_packages_path, lang_packages_path, texture_path, model_path
+from src.assets import main_path, options_path, assets_path, packages_path, lang_path, assets_packages_path, lang_packages_path, texture_path, model_path, fonts_path
 from src.data.options.create import create_options
 from src.data.package.create import create_package
 from src.data.assets.package.create import create_assets_package
 from src.data.assets.lang.package.create import create_assets_lang_package
 from src.data.assets.lang.set import set_langs
+from src.data.assets.fonts import default_fonts_str
+from src.assets.assets.font import default_font
 from src.Port import *
 from src.surface import init_surface
 
@@ -35,6 +41,41 @@ def init_data():
                     print(f'{Data}: {assets_packages_path} is created.')
                     with open(assets_packages_path, 'w', encoding='utf-8') as f:
                         create_assets_package(f)
+            def fonts():
+                def default():
+                    if exists(default_font):
+                        print(f'{Data}: {default_font} already exists.')
+                    else:
+                        print(f'{Data}: {default_font} is created.')
+                        with open(default_font, 'wb') as f:
+                            f.write(default_fonts_str)
+
+                if exists(fonts_path):
+                    print(f'{Data}: {lang_path} already exists.')
+                    default()
+                else:
+                    mkdir(fonts_path)
+                    print(f'{Data}: {lang_path} is created.')
+                    default()
+            def images():
+                def icon():
+                    def png():
+                        create_icon()
+                    if exists(icon_path):
+                        print(f'{Data}: {icon_path} already exists.')
+                        png()
+                    else:
+                        mkdir(icon_path)
+                        print(f'{Data}: {icon_path} is created.')
+                        png()
+
+                if exists(images_path):
+                    print(f'{Data}: {images_path} already exists.')
+                    icon()
+                else:
+                    mkdir(images_path)
+                    print(f'{Data}: {images_path} is created.')
+                    icon()
             def lang():
                 def assets_lang_package():
                     if exists(lang_packages_path):
@@ -68,16 +109,20 @@ def init_data():
                     mkdir(model_path)
                     print(f'{Data}: {model_path} is created.')
 
-            if exists(main_assets_path):
-                print(f'{Data}: {main_assets_path} already exists.')
+            if exists(assets_path):
+                print(f'{Data}: {assets_path} already exists.')
                 assets_package()
+                fonts()
+                images()
                 lang()
                 texture()
                 model()
             else:
-                mkdir(main_assets_path)
-                print(f'{Data}: {main_assets_path} is created.')
+                mkdir(assets_path)
+                print(f'{Data}: {assets_path} is created.')
                 assets_package()
+                fonts()
+                images()
                 lang()
                 texture()
                 model()

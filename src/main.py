@@ -1,6 +1,9 @@
-from src.tool import *
-from src.assets.assets.icon import icon
 from src.data import init_data
+
+init_data()
+
+from src.tool import *
+from src.assets.assets.icon.icon import icon
 from src.data.package.get import get_main_package
 from src.scene.core.save_scene import *
 from src.scene.run_scene import RunScene
@@ -11,8 +14,6 @@ from src.console import SceneDefault, DisplayFill
 from src.window import state, windows_size
 from src.package import Title
 import pygame
-
-init_data()
 
 class App:
     def __init__(self) -> None:
